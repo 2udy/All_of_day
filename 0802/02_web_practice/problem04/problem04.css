@@ -1,0 +1,42 @@
+/* 여기에 코드를 작성합니다. */
+img{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}
+.bg-border{
+    color: white;
+    width: 800px;
+    height: 800px;
+    border: 2px solid black;
+    font-size: 0px;
+}
+.black-blocks-1{
+    background-color: black;
+    width: 100px;
+    height: 100px;
+    margin-right: 100px;
+    display: inline-block;
+}
+
+.black-blocks-2 {
+    background-color: black;
+    width: 100px;
+    height: 100px;
+    margin-left: 100px;
+    display: inline-block;
+}
+.black-block{
+    background-color: black;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}
+.white-block{
+    background-color: white;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}
+
+/* 모든 스타일은 반드시 클래스 선택자를 이용해 정의합니다. 이후 HTML 태그에 해당 클래스를 적용합니다. */
