@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 1. Text interpolation -->
+  <div id="app">
+    <p>메시지: {{ msg }}</p>   
+    <p>HTML 메시지 : {{ rawHTML }}</p>
+    <p>HTML 메시지 : <span v-html="rawHTML"></span></p>
+    <p>{{ msg.split('').reverse().join('') }}</p>
+  </div>
+  
+  <hr>
+
+  <!-- 2. v-text & v-html -->
+  <div id="app2">
+    <!-- 2-1. v-text & {{}} -->
+    <p v-text="message"></p>
+    <!-- 같음 -->
+    <p>{{ message }}</p>
+
+    <!-- 2-2. v-html -->
+    <!-- 사용자가 입력하거나 제공하는 컨텐츠에는 절대 사용 금지(XSS 참고)  -->
+    <p v-html="html"></p>
+  </div>
+  
+  <hr>
+  
+  <!-- 3. v-show && v-if -->
+  <div id="app3">
+    <!-- 초기 로딩 값이 비싸지만 토글 값이 저렴 -->
+    <p v-show="isActive">보이니? 안보이니?</p>
+    <!-- 초기 로딩 값이 저렴(애초에 없으니까)하지만 토글 값이 비싸(실제 삭제와 생성 반복)다. -->
+    <!-- 조건이 false이면 태그의 존재 자체가 사라짐 -->
+    <p v-if="isActive">안보이니? 보이니?</p>
+    <!-- 상황에 맞춰서 적절한것 선택. 토글이 잦은 기능인지 아닌지 -->
+    <!-- else if 기능 때문에 결국 if를 더 많이 사용할 예정 -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    // 1. Text interpolation
+    const app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Text interpolation',
+        rawHTML: '<span style="color:red"> 빨간 글씨</span>'
+      }
+    })
+
+    // 2. v-text && v-html
+    const app2 = new Vue({
+      el: '#app2',
+      data: {
+        message: 'Hello!',
+        html: '<a href="https://www.google.com">GOOGLE</a>'
+      }
+    })
+
+    // 3. v-show && v-if
+    const app3 = new Vue({
+      el: '#app3',
+      data: {
+        isActive: true
+      }
+    })
+  </script>
+</body>
+</html>

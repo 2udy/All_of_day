@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Community</h1>
+  <hr>
+  {% for review in reviews %}
+    <p>작성자 : <a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></p>
+    <p>글 번호: {{ review.pk }}</p>
+    <p>글 제목: {{ review.title }}</p>
+    <p>글 내용: {{ review.content }}</p>
+    <form id="like-form" data-like-review="{{ review.pk }}">
+      {% if user in review.like_users.all %}
+        {% comment %} <button>좋아요 취소</button> {% endcomment %}
+        <input type="submit" value="좋아요 취소" id="like-{{ review.pk }}">
+      {% else %}
+        {% comment %} <button>좋아요</button> {% endcomment %}
+        <input type="submit" value="좋아요" id="like-{{ review.pk }}">
+      {% endif %}
+    </form>
+    <p>
+      <span id="likes-count-span-{{ review.pk }}">{{ review.like_users.all|length }}</span> 명이 이 글을 좋아합니다.
+    </p>
+    <a href="{% url 'community:detail' review.pk %}">[detail]</a>
+    <hr>
+  {% endfor %}
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const likeForms = document.querySelectorAll('#like-form')
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+  
+  console.log(likeForms)
+  likeForms.forEach((form) => {
+    form.addEventListener('submit', function (event){
+      event.preventDefault()
+      console.log(event.target.dataset)
+      const likeReview = event.target.dataset.likeReview
+      
+      axios({
+        method: 'post',
+        url: `/community/${likeReview}/like/`,
+        headers: {'X-CSRFToken': csrftoken,},
+      })
+      .then((response) => {
+        const isLiked = response.data.is_liked
+        const likeBtn = document.querySelector(`#like-${likeReview}`)
+        
+        if (isLiked){
+          likeBtn.value = "좋아요 취소"
+        } else {
+          likeBtn.value = "좋아요"
+        }
+        
+        const likesCount = response.data.likes_count
+        const likesCountSpan = document.querySelector(`#likes-count-span-${likeReview}`)
+        
+        likesCountSpan.innerText = likesCount
+        
+      })
+    })
+  })
+
+</script>
+{% endblock script %}

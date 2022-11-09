@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Movies</h1>
+  <a href="{% url 'movies:recommended' %}">추천 영화</a>
+  <hr>
+  {% for movie in movies %}
+  <h3>{{ movie.title }}</h3>
+  <p>개봉일 : {{ movie.release_date }}</p>
+  <p>장르 : {{ movie.genres }}</p>
+  <p>평점 : {{ movie.vote_average }}</p>
+  <a href={% url 'movies:detail' movie.pk %}>영화 세부정보</a>
+  <hr>
+  {% endfor %}
+{% endblock %}

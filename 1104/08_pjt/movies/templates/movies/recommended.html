@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>추천영화</h1>
+<h3>평점 8.5 이상 영화 10편 추천</h3>
+<hr>
+{% for movie in random_good_movies %}
+<h4>{{ movie.title }}</h4>
+<img src="{{ movie.poster_path }}" alt="">
+<br>
+<a href="{% url 'movies:detail' movie.pk %}">영화 세부정보</a>
+<hr>
+{% endfor %}
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script>
+  {% comment %} lodash로 10개 추천 {% endcomment %}
+
+</script>
+{% endblock script %}

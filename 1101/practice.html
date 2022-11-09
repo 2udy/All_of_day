@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app" >
+    <form action="" id="create" @submit="addTodo">
+      <select v-model="selected" name="" id="">
+        <option disabled value="">전체</option>
+        <option value="false">진행중</option>
+        <option value="true">완료</option>
+      </select>
+      <input type="text" >
+      <input type="submit" value="+">
+  </form>
+  
+  <ul>
+  </ul>
+  
+  <form action="" id="del">
+    <button>완료된 할 일 지우기</button>
+  </form>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        todoLists: [],
+        statuses: [['전체', ],['완료', true ],['진행중', false]],
+
+      },
+      methods: {
+        addTodo: function(event){
+          event.preventDefault()
+          const ulTag = document.querySelector('ul')
+          ulTag.createElement()
+          console.log(event)
+          console.log(event.target)
+          console.log(event.target.data)
+          // 
+
+        }
+      },
+      computed: {
+        // select로 t/f 지정 t/f 값에 따라 스타일을 입힌다.
+        // 상태가 진행중 이라면 false
+        // 완료이면 true
+        //
+
+      }
+    })
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .completed{
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <select v-model="status">
+      <option value="all">전체</option>
+      <option value="inProgress">진행중</option>
+      <option value="completed">완료</option>
+    </select>
+    
+    <input type="text" @keyup.enter="addTodo" v-model="content">
+
+    <ul>
+      <li v-for="(todo, index) in todoListByStatus" :key="todo.date"> 
+        <input 
+          type="checkbox" 
+          @click="toggleTodo(todo)"
+          :checked="todo.isCompleted"
+          >
+        <span :class="{ completed: todo.isCompleted }">{{ todo.content }}</span>
+      </li>    
+    </ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        todoList: [],
+        content: '',
+        status: 'all',
+      },
+      methods:{
+        addTodo: function (event) {
+          // todo 객체 만들어서 todolist에 push
+          const todo = {
+            content: this.content,
+            isCompleted: false,
+            date: new Date().getTime()
+          }
+          this.todoList.push(todo)
+          // todo 입력하고 빈칸으로 만들기
+          this.content=''
+        },
+        toggleTodo: function (todo) {
+          todo.isCompleted = !todo.isCompleted
+        },
+      },
+      computed: {
+        todoListByStatus: function () {
+          return this.todoList.filter((todo) => {
+            if (this.status === 'inProgress') {
+              return !todo.isCompleted
+            } 
+            if (this.status === 'completed') {
+              return todo.isCompleted
+            }
+            return true
+          })
+        }
+      },
+    })
+  </script>
+
+</body>
+</html>
